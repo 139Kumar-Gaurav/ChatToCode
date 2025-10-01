@@ -1,14 +1,33 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
 const NavBar = () => {
   const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    axios
+      .post(BASE_URL + "/logout", {}, { withCredentials: true })
+      .then(() => {
+        dispatch(removeUser());
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="navbar bg-base-300 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">C-T-C</a>
+        <Link className="btn btn-ghost text-xl" to={"/"}>
+          C-T-C
+        </Link>
       </div>
       {user && (
         <div className="flex gap-2 items-center">
-          <p>Welcome, {user.user.firstName}</p>
+          <p>Welcome, {user.firstName}</p>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -16,7 +35,7 @@ const NavBar = () => {
               className="btn btn-ghost btn-circle avatar mx-5"
             >
               <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={user.user.imageUrl} />
+                <img alt="Tailwind CSS Navbar component" src={user.imageUrl} />
               </div>
             </div>
             <ul
@@ -24,7 +43,7 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
+                <a className="justify-between" onClick={() => navigate("/profile")}>
                   Profile
                   <span className="badge">New</span>
                 </a>
@@ -33,7 +52,7 @@ const NavBar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a onClick={handleLogout}>Logout</a>
               </li>
             </ul>
           </div>
