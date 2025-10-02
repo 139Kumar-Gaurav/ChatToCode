@@ -50,7 +50,7 @@ const Profile = () => {
       .catch((err) => setError(err.message));
   };
   return (
-    <div className="justify-center flex justify-center">
+    <div className="justify-center flex">
       <div className="card bg-base-100 shadow-sm mx-auto w-96 my-20">
         <div className="card-body justify-content">
           <h2 className="card-title justify-center">Profile</h2>
