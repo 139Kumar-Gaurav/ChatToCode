@@ -29,7 +29,7 @@ const Friends = () => {
             friend;
           return (
             <div
-              className="flex flex-col gap-2 p-8 sm:flex-row sm:items-center sm:gap-6 sm:py-4 border-2 my-2 rounded-xl"
+              className="flex flex-col gap-3 p-8 sm:flex-row sm:items-center sm:gap-6 sm:py-4 border-2 my-2 rounded-xl"
               key={_id}
             >
               <img
@@ -42,6 +42,11 @@ const Friends = () => {
                   <p className="text-lg font-semibold text-black">
                     {firstName + " " + lastName}
                   </p>
+                  {age && gender && (
+                    <p className="font-medium text-gray-500">
+                      {age + ", " + gender}
+                    </p>
+                  )}
                   <p className="font-medium text-gray-500">{about}</p>
                 </div>
               </div>
