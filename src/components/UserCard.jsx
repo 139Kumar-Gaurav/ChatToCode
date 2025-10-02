@@ -1,4 +1,8 @@
 const UserCard = ({ user }) => {
+  if (!user) {
+    return null;
+  }
+  
   const { firstName, lastName, about, imageUrl, age, gender } = user;
   return (
     <div className="card bg-base-100 w-96 shadow-sm justify-center mx-auto my-20">

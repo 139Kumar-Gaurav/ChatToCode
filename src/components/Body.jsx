@@ -11,6 +11,8 @@ const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store)=> store.user);
+
+  // Add flex layout classes to ensure proper footer placement
   const fetchUser = async () => {
     try {
       await axios
@@ -27,9 +29,11 @@ const Body = () => {
     if(!user) {fetchUser()};
   }, []);
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <NavBar />
-      <Outlet />
+      <div className="flex-grow">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

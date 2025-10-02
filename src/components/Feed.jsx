@@ -12,19 +12,18 @@ const Feed = () => {
     await axios
       .get(BASE_URL + "/user/feed", { withCredentials: true })
       .then((res) => {
-        console.log(res);
         dispatch(addFeed(res?.data?.data));
       })
       .catch((err) => console.error(err.message));
   };
 
   useEffect(() => {
-    if (!userData.length) {
+    if (!userData?.length) {
       getFeed();
     }
   }, []);
   return (
-    <div>{userData && userData.length && <UserCard user={userData[0]} />}</div>
+    <div>{userData && userData?.length && <UserCard user={userData[0]} />}</div>
   );
 };
 
