@@ -16,9 +16,9 @@ const Friends = () => {
   useEffect(() => {
     getFriends();
   }, []);
-  if (friends?.length === 0)
+  if (!friends)
     return (
-      <h1 className="my-2 text-center font-bold text-3xl">No Friends Found</h1>
+      <h1 className="my-2 text-center font-bold text-3xl">No Friends Yet</h1>
     );
   return (
     <div className="justify-center flex my-5">
