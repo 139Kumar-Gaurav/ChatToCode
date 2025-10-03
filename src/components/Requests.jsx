@@ -32,7 +32,7 @@ const Requests = () => {
   useEffect(() => {
     getRequests();
   }, []);
-  if (!requests)
+  if (!requests || requests.length === 0)
     return (
       <h1 className="my-2 text-center font-bold text-3xl">No Requests Found</h1>
     );

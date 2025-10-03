@@ -158,6 +158,7 @@ const Profile = () => {
           gender,
           imageUrl,
         }}
+        showButton={false}
       />
       {save && (
         <div className="toast toast-top toast-center">

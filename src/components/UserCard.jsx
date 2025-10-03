@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
+import { removeFeed } from "../utils/feedSlice";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, showButton }) => {
   const userFeed = useSelector((store) => store.feed);
   const dispatch = useDispatch();
 
@@ -33,20 +34,22 @@ const UserCard = ({ user }) => {
         <h2 className="card-title">{firstName + " " + lastName}</h2>
         {age && gender && <p>{age + ", " + gender}</p>}
         <p>{about}</p>
-        <div className="card-actions justify-center">
-          <button
-            className="btn btn-primary"
-            onClick={()=>handleFeed("ignored", _id)}
-          >
-            Ignore
-          </button>
-          <button
-            className="btn btn-success"
-            onClick={()=>handleFeed("interested", _id)}
-          >
-            Interested
-          </button>
-        </div>
+        {showButton && (
+          <div className="card-actions justify-center">
+            <button
+              className="btn btn-primary"
+              onClick={() => handleFeed("ignored", _id)}
+            >
+              Ignore
+            </button>
+            <button
+              className="btn btn-success"
+              onClick={() => handleFeed("interested", _id)}
+            >
+              Interested
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

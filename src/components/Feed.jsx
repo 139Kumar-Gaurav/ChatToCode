@@ -22,8 +22,16 @@ const Feed = () => {
       getFeed();
     }
   }, []);
+  if (!userData || userData.length === 0)
+    return (
+      <h1 className="my-2 text-center font-bold text-3xl">Feed is clear for now</h1>
+    );
   return (
-    <div>{userData && userData?.length && <UserCard user={userData[0]} />}</div>
+    <div>
+      {userData && userData?.length && (
+        <UserCard user={userData[0]} showButton={true} />
+      )}
+    </div>
   );
 };
 
