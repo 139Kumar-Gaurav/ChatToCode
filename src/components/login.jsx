@@ -4,6 +4,9 @@ import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
+import { isPasswordStrong } from "../utils/passwordValidator";
+
 const login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -12,47 +15,74 @@ const login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [error, setError] = useState("");
+  const [showPasswordRequirements, setShowPasswordRequirements] =
+    useState(false);
 
   const handleChange = async (e) => {
     e.preventDefault();
-    await axios
-      .post(
-        BASE_URL + "/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        dispatch(addUser(res.data));
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setError("");
+    try {
+      await axios
+        .post(
+          BASE_URL + "/login",
+          {
+            email,
+            password,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          dispatch(addUser(res.data));
+          navigate("/");
+        })
+        .catch((err) => {
+          setError(
+            err.response?.data?.message || "Login failed. Please try again."
+          );
+          console.log(err);
+        });
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    await axios
-      .post(
-        BASE_URL + "/signup",
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        dispatch(addUser(res.data.data));
-        navigate("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setError("");
+
+    if (!isPasswordStrong(password)) {
+      setError(
+        "Password does not meet the strength requirements. Please use a stronger password."
+      );
+      return;
+    }
+
+    try {
+      await axios
+        .post(
+          BASE_URL + "/signup",
+          {
+            firstName,
+            lastName,
+            email,
+            password,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          dispatch(addUser(res.data.data));
+          navigate("/");
+        })
+        .catch((err) => {
+          setError(
+            err.response?.data?.message || "Signup failed. Please try again."
+          );
+          console.log(err);
+        });
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    }
   };
   return (
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 min-h-screen">
@@ -103,7 +133,6 @@ const login = () => {
                 placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
             </div>
             <div className="form-control w-full">
@@ -115,18 +144,27 @@ const login = () => {
                 required
                 className="input input-bordered w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="••••••••"
-                minLength="8"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => !isLogin && setShowPasswordRequirements(true)}
+                onBlur={() => !isLogin && setShowPasswordRequirements(false)}
               />
-              <label className="label">
-                <span className="label-text-alt text-xs text-gray-500">Min 8 chars, 1 number, 1 uppercase, 1 lowercase</span>
-              </label>
+              {!isLogin && showPasswordRequirements && (
+                <PasswordStrengthIndicator password={password} />
+              )}
+              {!isLogin && !showPasswordRequirements && password && (
+                <label className="label">
+                  <span className="label-text-alt text-xs text-gray-500">
+                    Min 8 chars, 1 number, 1 uppercase, 1 lowercase
+                  </span>
+                </label>
+              )}
             </div>
             <div className="card-actions justify-center mt-6">
-              <button type="submit" className="btn btn-gradient w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none font-semibold text-lg hover:shadow-lg">
+              <button
+                type="submit"
+                className="btn btn-gradient w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none font-semibold text-lg hover:shadow-lg"
+              >
                 {isLogin ? "Login" : "Create Account"}
               </button>
             </div>
@@ -135,10 +173,17 @@ const login = () => {
               className="text-center cursor-pointer text-blue-600 hover:text-purple-600 font-semibold transition-colors"
               onClick={() => setIsLogin(!isLogin)}
             >
-              {isLogin ? "👤 New User? Signup here" : "🔑 Existing User? Login here"}
+              {isLogin
+                ? "👤 New User? Signup here"
+                : "🔑 Existing User? Login here"}
             </p>
           </div>
         </div>
+        {error && (
+          <div className="alert alert-error mt-4">
+            <span>{error}</span>
+          </div>
+        )}
       </form>
     </div>
   );
