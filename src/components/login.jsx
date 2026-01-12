@@ -55,7 +55,7 @@ const login = () => {
       });
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 min-h-screen">
       <form onSubmit={isLogin ? handleChange : handleSignUp}>
         <div className="card bg-white w-full max-w-md shadow-2xl justify-center rounded-2xl">
           <div className="card-body p-8">

@@ -50,7 +50,7 @@ const Profile = () => {
       .catch((err) => setError(err.message));
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4">
+    <div className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-center text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-10">✨ Edit Your Profile</h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

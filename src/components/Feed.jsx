@@ -68,7 +68,7 @@ const Feed = () => {
     );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 px-4">
+    <div className="flex flex-col items-center justify-center py-8 px-4">
       <div className="w-full h-screen sm:h-auto flex flex-col items-center justify-center">
         <div
           className="flex items-center justify-center gap-4 w-full"
