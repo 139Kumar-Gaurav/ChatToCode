@@ -29,12 +29,18 @@ const Body = () => {
     if(!user) {fetchUser()};
   }, []);
   return (
-    <div className="min-h-screen flex flex-col">
-      <NavBar />
-      <div className="flex-grow">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <NavBar />
+      </header>
+
+      <main className="flex-1 w-full mt-16 pt-4 pb-4">
         <Outlet />
-      </div>
-      <Footer />
+      </main>
+
+      <footer className="mt-auto">
+        <Footer />
+      </footer>
     </div>
   );
 };

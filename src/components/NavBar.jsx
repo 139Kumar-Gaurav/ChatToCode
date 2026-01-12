@@ -4,7 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
+
 const NavBar = () => {
+  const theme = useContext(ThemeContext);
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,15 +25,15 @@ const NavBar = () => {
       });
   };
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className={`navbar ${theme.components.navbar.bg} ${theme.components.navbar.shadow}`}>
       <div className="flex-1">
-        <Link className="btn btn-ghost text-xl" to={"/"}>
-          C-T-C
+        <Link className={`btn btn-ghost text-2xl font-bold ${theme.components.navbar.text} hover:bg-blue-700`} to={"/"}>
+          💬 C-T-C
         </Link>
       </div>
       {user && (
-        <div className="flex gap-2 items-center">
-          <p>Welcome, {user.firstName}</p>
+        <div className="flex gap-4 items-center">
+          <p className="text-white font-semibold hidden sm:block">Welcome, {user.firstName}! 👋</p>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -42,22 +46,22 @@ const NavBar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-white rounded-lg z-50 mt-3 w-52 p-2 shadow-xl border border-gray-200"
             >
               <li>
-                <a className="justify-between" onClick={() => navigate("/profile")}>
+                <a className="justify-between hover:bg-blue-50" onClick={() => navigate("/profile")}>
                   Profile
-                  <span className="badge">New</span>
+                  <span className="badge badge-primary">New</span>
                 </a>
               </li>
               <li>
-                <Link to={"/requests"}>Requests</Link>
+                <Link to={"/requests"} className="hover:bg-blue-50">Requests</Link>
               </li>
               <li>
-                <Link to={"/friends"}>Friends</Link>
+                <Link to={"/friends"} className="hover:bg-blue-50">Friends</Link>
               </li>
               <li>
-                <a onClick={handleLogout}>Logout</a>
+                <a onClick={handleLogout} className="text-red-500 hover:bg-red-50">Logout</a>
               </li>
             </ul>
           </div>

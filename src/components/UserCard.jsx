@@ -26,27 +26,27 @@ const UserCard = ({ user, showButton }) => {
     );
   }
   return (
-    <div className="card bg-base-100 w-96 shadow-sm justify-center mx-auto my-20">
-      <figure>
-        <img src={imageUrl} alt="User Image" />
+    <div className="card bg-white w-full max-w-lg h-screen sm:h-auto sm:max-h-[700px] shadow-2xl rounded-3xl overflow-hidden hover:shadow-3xl transition-shadow duration-300 flex flex-col">
+      <figure className="relative w-full h-72 sm:h-80 flex-shrink-0 bg-gradient-to-br from-blue-200 to-purple-200 flex items-center justify-center">
+        <img src={imageUrl} alt="User Image" className="w-full h-full object-scale-down" />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
-        <p>{about}</p>
+      <div className="card-body p-6 sm:p-8 space-y-3 flex-1 flex flex-col overflow-y-auto">
+        <h2 className="card-title text-2xl sm:text-3xl font-bold text-gray-800 mb-2 flex-shrink-0">{firstName + " " + lastName}</h2>
+        {age && gender && <p className="text-base sm:text-lg text-gray-600 font-semibold flex-shrink-0">🎂 {age} years old • {gender === "male" ? "👨" : gender === "female" ? "👩" : "🧑"} {gender}</p>}
+        <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-2 line-clamp-3 overflow-hidden">{about}</p>
         {showButton && (
-          <div className="card-actions justify-center">
+          <div className="card-actions justify-center gap-3 mt-auto pt-4 flex-shrink-0">
             <button
-              className="btn btn-primary"
+              className="btn btn-md sm:btn-lg btn-outline btn-error flex-1 hover:bg-red-100 text-sm sm:text-base font-bold"
               onClick={() => handleFeed("ignored", _id)}
             >
-              Ignore
+              ❌ Ignore
             </button>
             <button
-              className="btn btn-success"
+              className="btn btn-md sm:btn-lg btn-gradient btn-success flex-1 bg-gradient-to-r from-green-400 to-blue-500 text-white border-none hover:shadow-lg text-sm sm:text-base font-bold"
               onClick={() => handleFeed("interested", _id)}
             >
-              Interested
+              💚 Interested
             </button>
           </div>
         )}

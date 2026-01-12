@@ -50,48 +50,56 @@ const Profile = () => {
       .catch((err) => setError(err.message));
   };
   return (
-    <div className="justify-center flex">
-      <div className="card bg-base-100 shadow-sm mx-auto w-96 my-20">
-        <div className="card-body justify-content">
-          <h2 className="card-title justify-center">Profile</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-center text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-10">✨ Edit Your Profile</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Form Section */}
+          <div className="flex justify-center">
+            <div className="card bg-white shadow-2xl w-full rounded-3xl p-8">
+              <div className="space-y-5">
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-bold text-base">First Name</span>
+              </label>
+              <input
+                type="text"
+                className="input input-bordered w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="John"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-bold text-base">Last Name</span>
+              </label>
+              <input
+                type="text"
+                className="input input-bordered w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Doe"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
           <fieldset className="fieldset">
-            <legend className="fieldset-legend">First Name</legend>
-            <input
-              type="text"
-              className="input"
-              placeholder="Type here"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">Last Name</legend>
-            <input
-              type="text"
-              className="input"
-              placeholder="Type here"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">Age</legend>
+            <legend className="fieldset-legend font-bold text-base">Age</legend>
             <input
               type="number"
-              className="input validator"
+              className="input input-bordered w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              placeholder="Type a number between 1 to 100"
+              placeholder="25"
               min="1"
               max="100"
-              title="Must be between be 1 to 100"
+              title="Must be between 1 to 100"
               value={age}
               onChange={(e) => setAge(e.target.value)}
             />
           </fieldset>
           <fieldset className="fieldset">
-            <legend className="fieldset-legend">Gender</legend>
+            <legend className="fieldset-legend font-bold text-base">Gender</legend>
             <select
-              className="select"
+              className="select select-bordered w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={gender || "Select a Gender"}
               onChange={(e) => setGender(e.target.value)}
             >
@@ -103,67 +111,64 @@ const Profile = () => {
               <option>others</option>
             </select>
           </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">Image URL</legend>
-            <label className="input validator">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                </g>
-              </svg>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-bold text-base">Image URL</span>
+              </label>
               <input
                 type="url"
                 required
-                placeholder="https://"
+                className="input input-bordered w-full rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="https://example.com/image.jpg"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
                 title="Must be valid URL"
               />
-            </label>
-          </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">About</legend>
-            <textarea
-              className="textarea h-24"
-              placeholder="About"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-            ></textarea>
-          </fieldset>
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleSave}>
-              Save
+            </div>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-bold text-base">About</span>
+              </label>
+              <textarea
+                className="textarea textarea-bordered h-32 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Tell us about yourself..."
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+              ></textarea>
+            </div>
+          <div className="card-actions justify-center mt-8">
+            <button className="btn btn-lg w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none font-bold text-lg hover:shadow-lg" onClick={handleSave}>
+              💾 Save Changes
             </button>
+          </div>
+            </div>
+            </div>
+          </div>
+
+          {/* Preview Section */}
+          <div className="flex items-center justify-center">
+            <div className="w-full">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">👁️ Preview</h2>
+              <UserCard
+                user={{
+                  firstName,
+                  lastName,
+                  age,
+                  about,
+                  gender,
+                  imageUrl,
+                }}
+                showButton={false}
+              />
+            </div>
           </div>
         </div>
       </div>
-      <UserCard
-        user={{
-          firstName,
-          lastName,
-          age,
-          about,
-          gender,
-          imageUrl,
-        }}
-        showButton={false}
-      />
       {save && (
         <div className="toast toast-top toast-center">
-          <div className="alert alert-success">
-            <span>Profile Saved Successfully.</span>
+          <div className="alert alert-success bg-green-500 text-white border-none shadow-lg">
+            <span>✅ Profile Saved Successfully!</span>
           </div>
         </div>
       )}
